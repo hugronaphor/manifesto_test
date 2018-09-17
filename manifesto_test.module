@@ -1,0 +1,26 @@
+<?php
+
+/**
+ * @file
+ * Contains manifesto_test.module.
+ */
+
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\user\Entity\User;
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ *
+ * Add the description to the Title field of Article Content Type
+ * in case the current user don't have "Administrator" role.
+ */
+function manifesto_test_form_node_form_alter(&$form, FormStateInterface $form_state) {
+  /** @var \Drupal\node\Entity\Node $node */
+  $node = $form_state->getFormObject()->getEntity();
+
+  if ($node->bundle() == 'article_manifesto' &&
+    !User::load(\Drupal::currentUser()->id())->hasRole('administrator')) {
+    $form['title']['widget'][0]['value']['#description'] =
+      t('Lorem ipsum dolor sit amet, consectetur adipiscing elit.');
+  }
+}
