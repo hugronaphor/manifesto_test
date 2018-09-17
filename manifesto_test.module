@@ -7,6 +7,8 @@
 
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\user\Entity\User;
+use Drupal\Core\Entity\EntityInterface;
+use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
 
 /**
  * Implements hook_form_FORM_ID_alter().
@@ -34,4 +36,48 @@ function manifesto_test_theme() {
       'variables' => [],
     ],
   ];
+}
+
+/**
+ * Implements hook_entity_extra_field_info().
+ *
+ * Define Postcode pseudo field.
+ */
+function manifesto_test_entity_extra_field_info() {
+  $extra_field = [];
+
+  $extra_field['node']['article_manifesto']['display']['postcode_value'] = [
+    'label' => t('Postcode - Pseudo field'),
+    'weight' => 1,
+    'visible' => TRUE,
+  ];
+
+  return $extra_field;
+}
+
+/**
+ * Implements hook_ENTITY_TYPE_view().
+ *
+ * Render postcode pseudo field.
+ */
+function manifesto_test_node_view(array &$build, EntityInterface $entity, EntityViewDisplayInterface $display, $view_mode) {
+  if ($view_mode != 'full') {
+    return FALSE;
+  }
+
+  if (!$display->getComponent('postcode_value')) {
+    return FALSE;
+  }
+
+  if (!$entity->hasField('field_postcode')) {
+    return FALSE;
+  }
+
+  $fieldVal = $entity->get('field_postcode')->getValue();
+  if (!empty($fieldVal[0]['value'])) {
+    $build['postcode_value'] = [
+      '#plain_text' => $fieldVal[0]['value'],
+    ];
+  }
+
 }
