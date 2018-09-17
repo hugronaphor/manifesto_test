@@ -24,3 +24,14 @@ function manifesto_test_form_node_form_alter(&$form, FormStateInterface $form_st
       t('Lorem ipsum dolor sit amet, consectetur adipiscing elit.');
   }
 }
+
+/**
+ * Implements hook_theme().
+ */
+function manifesto_test_theme() {
+  return [
+    'manifesto_test_weather' => [
+      'variables' => [],
+    ],
+  ];
+}

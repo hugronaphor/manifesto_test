@@ -1,0 +1,9 @@
+weather_widget:
+  version: VERSION
+  js:
+    js/weather_widget.js: {}
+  dependencies:
+    - core/jquery
+    - core/drupal
+    - core/drupalSettings
+    - core/jquery.once

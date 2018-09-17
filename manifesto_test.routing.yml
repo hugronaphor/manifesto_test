@@ -1,0 +1,7 @@
+manifesto_test.get_weather:
+  path: '/manifesto-test/get-weather'
+  methods: [GET]
+  defaults:
+     _controller: '\Drupal\manifesto_test\Controller\WeatherWidgetController::getWeather'
+  requirements:
+     _permission: 'access content'

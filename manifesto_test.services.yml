@@ -1,0 +1,3 @@
+services:
+  manifesto_test.fetch_weather:
+    class: 'Drupal\manifesto_test\Weather'
